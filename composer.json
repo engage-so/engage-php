@@ -1,0 +1,19 @@
+{
+    "name": "engage/engage-php",
+    "description": "A PHP SDK for Engage (http://engage.so/)",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Opeyemi Obembe",
+            "email": "ope@engage.so",
+            "homepage": "http://engage.so"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Engage\\": "src/"
+      }
+    },
+    "require": {}
+}
