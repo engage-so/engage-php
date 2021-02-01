@@ -14,7 +14,7 @@ class Users extends Api
     if (!$o['email'] || preg_match('/^\S+@\S+$/', $o['email'])) {
       throw new \InvalidArgumentException('Email missing or invalid.');
     }
-    $allowed = ['id', 'email', 'device_token', 'device', 'number', 'created_at', 'first_name', 'last_name'];
+    $allowed = ['id', 'email', 'device_token', 'device_platform', 'number', 'created_at', 'first_name', 'last_name'];
     $params = [];
     foreach ($o as $k => $v) {
       if ($allowed[$k]) {
@@ -35,7 +35,7 @@ class Users extends Api
     if (!count($data)) {
       throw new \InvalidArgumentException('No attributes provided.');
     }
-    $notMeta = ['email', 'device_token', 'device', 'number', 'created_at', 'first_name', 'last_name'];
+    $notMeta = ['email', 'device_token', 'device_platform', 'number', 'created_at', 'first_name', 'last_name'];
     $params = ['meta' => []];
     foreach ($data as $k => $v) {
       if ($notMeta[$k]) {
