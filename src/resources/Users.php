@@ -4,6 +4,11 @@ namespace Engage\Resources;
 class Users extends Api
 {
 
+  public function __construct($clientObj) {
+    parent::__construct();
+    $this->setCredentials($clientObj);
+  }
+
   public function identify($o = null) {
     if (!$o) {
       throw new \InvalidArgumentException('You need to pass an object with at least an id and email.');
@@ -11,7 +16,7 @@ class Users extends Api
     if (!$o['id']) {
       throw new \InvalidArgumentException('ID missing.');
     }
-    if (!$o['email'] || preg_match('/^\S+@\S+$/', $o['email'])) {
+    if (!$o['email'] || !preg_match('/^\S+@\S+$/', $o['email'])) {
       throw new \InvalidArgumentException('Email missing or invalid.');
     }
     $allowed = ['id', 'email', 'device_token', 'device_platform', 'number', 'created_at', 'first_name', 'last_name'];
@@ -21,7 +26,7 @@ class Users extends Api
         $params[k] = $v;
       }
     }
-  
+
     return $this->put("/users/{$o['id']}", $params);
   }
 
@@ -44,7 +49,7 @@ class Users extends Api
         $params['meta'][$k] = $v;
       }
     }
-  
+
     return $this->put("/users/$uid", params);
   }
 
@@ -65,8 +70,12 @@ class Users extends Api
         throw new \InvalidArgumentException('No attributes provided');
       }
     }
-  
+
     return $this->post("/users/$uid/events", data);
+  }
+
+  public function test() {
+    return $this->put("/users/test", []);
   }
 }
 ?>
