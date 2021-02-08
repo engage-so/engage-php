@@ -50,7 +50,6 @@ class Api
   {
   $endpoint = self::ROOT . $url;
   $payload = $this->preparePayload($params);
-  var_dump($payload);
   try {
     $response = $this->client->request($method, $endpoint, $payload);
     $code = $response->getStatusCode();
@@ -86,6 +85,17 @@ class Api
       ],
       'json' => $params
     ];
+  }
+
+  // allow client be mocked during testing
+  public function setClient($client)
+  {
+    $this->client = $client;
+  }
+
+  public function getClient()
+  {
+    return $this->client;
   }
 
   public function setCredentials($clientObj)

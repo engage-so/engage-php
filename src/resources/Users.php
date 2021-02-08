@@ -73,9 +73,5 @@ class Users extends Api
 
     return $this->post("/users/$uid/events", data);
   }
-
-  public function test() {
-    return $this->put("/users/test", []);
-  }
 }
 ?>
