@@ -1,7 +1,9 @@
 {
     "name": "engage/engage-php",
+    "version": "1.0.0",
     "description": "A PHP SDK for Engage (http://engage.so/)",
     "type": "library",
+    "homepage": "https://engage.so/",
     "license": "MIT",
     "authors": [
         {
