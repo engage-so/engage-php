@@ -46,7 +46,7 @@ class Api
         $this->client = HttpClient::create();
     }
 
-    public function makeRequest($method, $url, $body)
+    public function makeRequest($method, $url, $params)
     {
         $endpoint = self::ROOT.$url;
         $payload = $this->preparePayload($params);

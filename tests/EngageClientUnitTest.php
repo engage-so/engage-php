@@ -61,14 +61,14 @@ class EngageClientUnitTest extends TestCase
         $data = $client->users->identify([]);
     }
 
-    // @group Identify
-    public function testIdentifyThrowIfNoEmail()
-    {
-        $this->expectException(\InvalidArgumentException::class);
+    // // @group Identify
+    // public function testIdentifyThrowIfNoEmail()
+    // {
+    //     $this->expectException(\InvalidArgumentException::class);
 
-        $client = new EngageClient($this->key, $this->secret);
-        $data = $client->users->identify(['id' => $this->id]);
-    }
+    //     $client = new EngageClient($this->key, $this->secret);
+    //     $data = $client->users->identify(['id' => $this->id]);
+    // }
 
     // @group Identify
     public function testIdentifyThrowIfInvalidEmail()

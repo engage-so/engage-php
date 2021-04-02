@@ -38,7 +38,7 @@ class EngageClientFunctionalTest extends TestCase
             'email' => $this->email,
         ]);
 
-        $this->assertSame($this->okStatus, json_encode($resp));
+        $this->assertArraySubset(['uid' => $this->id], json_decode($resp, true));
     }
 
     public function testAddAttribute()
@@ -49,7 +49,7 @@ class EngageClientFunctionalTest extends TestCase
             'created_at' => '2021-02-08',
         ]);
 
-        $this->assertSame($this->okStatus, json_encode($resp));
+        $this->assertArraySubset(['uid' => $this->id], json_decode($resp, true));
     }
 
     public function testTrackUserEvent()
@@ -59,7 +59,7 @@ class EngageClientFunctionalTest extends TestCase
             'value' => 190.23,
         ]);
 
-        $this->assertSame($this->okStatus, json_encode($resp));
+        $this->assertSame($this->okStatus, json_decode($resp, true));
     }
 
     public function testTrackWithExtraPayload()
@@ -74,6 +74,6 @@ class EngageClientFunctionalTest extends TestCase
             ],
         ]);
 
-        $this->assertSame($this->okStatus, json_encode($resp));
+        $this->assertSame($this->okStatus, json_decode($resp, true));
     }
 }

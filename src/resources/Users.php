@@ -18,14 +18,16 @@ class Users extends Api
         if (!$o['id']) {
             throw new \InvalidArgumentException('ID missing.');
         }
-        if (!$o['email'] || !preg_match('/^\S+@\S+$/', $o['email'])) {
+        if ($o['email'] && !preg_match('/^\S+@\S+$/', $o['email'])) {
             throw new \InvalidArgumentException('Email missing or invalid.');
         }
         $allowed = ['id', 'email', 'device_token', 'device_platform', 'number', 'created_at', 'first_name', 'last_name'];
-        $params = [];
+        $params = ['meta' => []];
         foreach ($o as $k => $v) {
-            if ($allowed[$k]) {
-                $params[k] = $v;
+            if (array_key_exists($k, $allowed)) {
+                $params[$k] = $v;
+            } else {
+                $params['meta'][$k] = $v;
             }
         }
 
@@ -46,14 +48,14 @@ class Users extends Api
         $notMeta = ['email', 'device_token', 'device_platform', 'number', 'created_at', 'first_name', 'last_name'];
         $params = ['meta' => []];
         foreach ($data as $k => $v) {
-            if ($notMeta[$k]) {
+            if (array_key_exists($k, $notMeta)) {
                 $params[$k] = $v;
             } else {
                 $params['meta'][$k] = $v;
             }
         }
 
-        return $this->put("/users/$uid", params);
+        return $this->put("/users/$uid", $params);
     }
 
     public function track($uid, $data)
@@ -75,6 +77,6 @@ class Users extends Api
             }
         }
 
-        return $this->post("/users/$uid/events", data);
+        return $this->post("/users/$uid/events", $data);
     }
 }
