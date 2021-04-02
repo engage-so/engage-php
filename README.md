@@ -10,7 +10,7 @@ The Engage PHP SDK lets you capture user attributes and events on your site. You
 ## Installation
 
 ```ssh
-composer require "engage/engage-php"
+composer require "engageso/engage-php"
 ```
 
 ## Configuration
