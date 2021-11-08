@@ -24,7 +24,7 @@ class Users extends Api
         $allowed = ['id', 'email', 'device_token', 'device_platform', 'number', 'created_at', 'first_name', 'last_name'];
         $params = ['meta' => []];
         foreach ($o as $k => $v) {
-            if (array_key_exists($k, $allowed)) {
+            if (in_array($k, $allowed)) {
                 $params[$k] = $v;
             } else {
                 $params['meta'][$k] = $v;
@@ -48,7 +48,7 @@ class Users extends Api
         $notMeta = ['email', 'device_token', 'device_platform', 'number', 'created_at', 'first_name', 'last_name'];
         $params = ['meta' => []];
         foreach ($data as $k => $v) {
-            if (array_key_exists($k, $notMeta)) {
+            if (in_array($k, $notMeta)) {
                 $params[$k] = $v;
             } else {
                 $params['meta'][$k] = $v;

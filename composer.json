@@ -1,6 +1,6 @@
 {
     "name": "engageso/engage-php",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A PHP SDK for Engage (http://engage.so/)",
     "type": "library",
     "homepage": "https://engage.so/",
