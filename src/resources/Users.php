@@ -31,6 +31,10 @@ class Users extends Api
             }
         }
 
+        if (!count($params['meta'])) {
+            unset($params['meta']);
+        }
+
         return $this->put("/users/{$o['id']}", $params);
     }
 
@@ -55,6 +59,10 @@ class Users extends Api
             }
         }
 
+        if (!count($params['meta'])) {
+            unset($params['meta']);
+        }
+
         return $this->put("/users/$uid", $params);
     }
 
@@ -64,16 +72,16 @@ class Users extends Api
             throw new \InvalidArgumentException('User id missing');
         }
         if (!$data) {
-            throw new \InvalidArgumentException('Attributes missing');
+            throw new \InvalidArgumentException('Data missing');
         }
         if (is_string($data)) {
             $data = [
-              'event' => data,
-              'value' => true,
+              'event' => $data,
+              'value' => true
             ];
         } else {
             if (!count($data)) {
-                throw new \InvalidArgumentException('No attributes provided');
+                throw new \InvalidArgumentException('No data provided');
             }
         }
 
