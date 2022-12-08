@@ -37,9 +37,32 @@ $engage->users->identify([
 - `first_name`
 - `last_name`
 - `email`
+- `is_account` (if the user is an account or customer)
 - `number` (with international dialing code without the +)
 - `created_at` (represents when the user registered on your platform. If not added, Engage sets it to the current timestamp.)
 
+To identify a user as an [Account](https://docs.engage.so/en-us/a/638b651db6bd27a330786c09-accounts):
+
+```php
+$engage->users->identify([
+  'id' => 'u13345',
+  'is_account' => true,
+  'email' => 'hello@mail.app',
+  'created_at' => '2020-05-30T09:30:10Z'
+]);
+```
+
+To convert a Customer to an Account:
+
+```php
+$engage->users->convertToAccount('u13345');
+```
+
+To convert an Account to a Customer:
+
+```php
+$engage->users->convertToCustomer('u15645');
+```
 
 ## Update/add user attributes
 
@@ -87,6 +110,26 @@ $engage->users->track($userId, [
     'amount' => 12.99
   ]
 ]);
+```
+
+## Add a Customer to an Account
+
+```php
+$engage->users->addToAccount($userId, $accountId, $role);
+```
+
+Role is optional.
+
+## Update Account role
+
+```php
+$engage->users->changeAccountRole($userId, $accountId, $newRole);
+```
+
+## Remove Customer from Account
+
+```php
+$engage->users->removeFromAccount($userId, $accountId);
 ```
 
 ## License
