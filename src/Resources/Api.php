@@ -46,7 +46,7 @@ class Api
         $this->client = HttpClient::create();
     }
 
-    public function makeRequest($method, $url, $params)
+    public function makeRequest($method, $url, $params = [])
     {
         $endpoint = self::ROOT.$url;
         $payload = $this->preparePayload($params);
@@ -74,6 +74,13 @@ class Api
     public function post($url, $params)
     {
         $response = $this->makeRequest('POST', $url, $params);
+
+        return $response;
+    }
+
+    public function delete($url)
+    {
+        $response = $this->makeRequest('DELETE', $url);
 
         return $response;
     }

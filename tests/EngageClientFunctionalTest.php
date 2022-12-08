@@ -10,22 +10,15 @@ class EngageClientFunctionalTest extends TestCase
     protected $client;
 
     protected $id = '1234';
+    protected $gid = 'abcd';
     protected $email = 'test@email.com';
     protected $users;
     protected $okStatus = ['status' => 'ok'];
 
-    // @skip
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->key = $_SERVER['ENGAGE_KEY'];
         $this->secret = $_SERVER['ENGAGE_SECRET'];
-        $skip = $_SERVER['ENGAGE_PHP_SKIP_INTEGRATION'];
-
-        if ($skip == '') {
-            $this->markTestSkipped(
-                'Set ENGAGE_KEY and ENGAGE_SECRET environment variables to enable integration testing'
-            );
-        }
 
         $this->client = new EngageClient($this->key, $this->secret);
         $this->users = $this->client->users;
@@ -75,5 +68,55 @@ class EngageClientFunctionalTest extends TestCase
         ]);
 
         $this->assertSame($this->okStatus, json_decode($resp, true));
+    }
+
+    public function testCreateAccount()
+    {
+        $resp = $this->users->identify([
+            'id' => $this->gid,
+            'email' => $this->email,
+            'is_account' => true
+        ]);
+
+        $this->assertArraySubset(['uid' => $this->gid, 'is_account' => true], json_decode($resp, true));
+    }
+
+    public function testAddToAccount()
+    {
+        $resp = $this->users->addToAccount($this->id, $this->gid);
+        $sub = json_decode($resp, true);
+
+        $this->assertSame([['id' => $this->gid, 'role' => null]], $sub['accounts']);
+    }
+
+    public function testChangeAccountRole()
+    {
+        $role = 'admin';
+        $resp = $this->users->changeAccountRole($this->id, $this->gid, $role);
+        $sub = json_decode($resp, true);
+
+        $this->assertSame([['id' => $this->gid, 'role' => $role]], $sub['accounts']);
+    }
+
+    public function testRemoveFromAccount()
+    {
+        $resp = $this->users->removeFromAccount($this->id, $this->gid);
+        $sub = json_decode($resp, true);
+
+        $this->assertSame([], $sub['accounts']);
+    }
+
+    public function testConvertToCustomer()
+    {
+        $resp = $this->users->convertToCustomer($this->gid);
+        $sub = json_decode($resp, true);
+        $this->assertSame($sub['is_account'], false);
+    }
+
+    public function testConvertToAccount()
+    {
+        $resp = $this->users->convertToAccount($this->gid);
+        $sub = json_decode($resp, true);
+        $this->assertSame($sub['is_account'], true);
     }
 }

@@ -8,8 +8,8 @@ class ResourceFactory
 {
     private $clientObj;
     private $resources = [
-    'users' => Users::class,
-  ];
+        'users' => Users::class,
+    ];
 
     public function __construct($clientObj)
     {
